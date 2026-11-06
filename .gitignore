@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+ayar.json
+*.xlsx
+*.png
