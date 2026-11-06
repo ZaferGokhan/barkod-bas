@@ -1,26 +1,26 @@
 # Barkod Bas
 
-Nelko P21 Bluetooth etiket yazıcısına barkod basar. Telefon uygulamasından bağımsızdır.
+Prints barcodes on a Nelko P21 Bluetooth label printer. It does not depend on the phone app.
 
-İki kaynak vardır:
+Two sources:
 
-- **Excel sütunu.** Dosya seçilir, sütun seçilir. İlk satır başlıksa atlanır. Boş olmayan her hücre kendi etiketi olur.
-- **Liste.** Her satır bir etikettir. Aynı yazı beş kez yazılırsa beş etiket basılır.
+- **Excel column.** Pick a file and a column. The first row can be skipped as a header. Every non-empty cell becomes its own label.
+- **List.** Each line is one label. The same text on five lines prints five labels.
 
-**Hepsini bas** sırayı başlatır. **Durdur** kalanları keser.
+**Hepsini bas** starts the queue. **Durdur** stops whatever is left.
 
-Etiketler tek tek basılır. Biri yazıcıdan çıkmadan diğeri başlamaz. Hepsi birden gönderilirse yazıcı baskıyı yarıda keser. Etikete sığmayan uzun satır atlanır.
+Labels print one at a time. The next job is not sent until the current label has come out. Sending them all at once makes the printer cut the print in half. A line that is too long for the label is skipped.
 
-## Etiket
+## Label
 
-Barkod Code 128'dir. Rakamlarda Code C, diğer yazılarda Code B kullanılır. Barkodun yanında yazının kendisi de vardır.
+The barcode is Code 128. Digits use Code C. Other text uses Code B. The text itself is printed beside the bars.
 
-Ölçü yazıcıdaki rulodan okunur. Okunamazsa 14×40 mm, 5 mm boşluk kullanılır. Yoğunluk 15'tir.
+Size is read from the roll in the printer. If that fails, the job uses 14×40 mm with a 5 mm gap. Density is 15.
 
-Yazıcı Bluetooth SPP (COM) üzerinden konuşur. Windows Ayarlar'da "bağlandı" deyip hemen düşmesi normaldir. Port yalnızca baskı sırasında açık kalır. Sıfır MAC adresli gelen kutu portu kullanılmaz.
+The printer speaks Bluetooth SPP over a COM port. Windows Settings showing Connected and then immediately Disconnected is normal. The port stays open only while labels are printing. The incoming port with an all-zero MAC address is ignored.
 
-## Çalıştırma
+## How to run
 
-`Barkod.bat` pencereyi açar. Python paketleri (`openpyxl`, `pyserial`, `Pillow`) yoksa kurar.
+`Barkod.bat` opens the window. If `openpyxl`, `pyserial`, or `Pillow` is missing, the batch file installs them.
 
-Excel sayısı tam sayıysa metin olarak basılır. IMEI bilimsel gösterime dönmez.
+A whole number read from Excel is printed as that number, so an IMEI is not turned into scientific notation.
